@@ -23,6 +23,7 @@
 		8FEC5A4A19B3E21D00E53517 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8FEC5A4819B3E21D00E53517 /* InfoPlist.strings */; };
 		8FEC5A4C19B3E21D00E53517 /* MatchedUpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A4B19B3E21D00E53517 /* MatchedUpTests.m */; };
 		8FEC5A5719B3E2FD00E53517 /* ITLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A5619B3E2FD00E53517 /* ITLoginViewController.m */; };
+		8FEC5A5B19B5721900E53517 /* ITConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A5A19B5721900E53517 /* ITConstants.m */; };
 		F3EF59CB25A14D9482EEDACB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EF4EB22778402E920F993C /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,8 @@
 		8FEC5A4B19B3E21D00E53517 /* MatchedUpTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchedUpTests.m; sourceTree = "<group>"; };
 		8FEC5A5519B3E2FD00E53517 /* ITLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITLoginViewController.h; sourceTree = "<group>"; };
 		8FEC5A5619B3E2FD00E53517 /* ITLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITLoginViewController.m; sourceTree = "<group>"; };
+		8FEC5A5919B5721900E53517 /* ITConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITConstants.h; sourceTree = "<group>"; };
+		8FEC5A5A19B5721900E53517 /* ITConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITConstants.m; sourceTree = "<group>"; };
 		D62ADE1A38C54BF0A41A5926 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -145,6 +148,8 @@
 				8FEC5A2619B3E21C00E53517 /* InfoPlist.strings */,
 				8FEC5A2919B3E21C00E53517 /* main.m */,
 				8FEC5A2B19B3E21C00E53517 /* MatchedUp-Prefix.pch */,
+				8FEC5A5919B5721900E53517 /* ITConstants.h */,
+				8FEC5A5A19B5721900E53517 /* ITConstants.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -309,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FEC5A5B19B5721900E53517 /* ITConstants.m in Sources */,
 				8FEC5A3419B3E21C00E53517 /* ITFirstViewController.m in Sources */,
 				8FEC5A5719B3E2FD00E53517 /* ITLoginViewController.m in Sources */,
 				8FEC5A2A19B3E21C00E53517 /* main.m in Sources */,
