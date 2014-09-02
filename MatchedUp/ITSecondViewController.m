@@ -18,7 +18,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    PFQuery *query = [PFQuery queryWithClassName:kITPhotoUserKey];
+    PFQuery *query = [PFQuery queryWithClassName:kITPhotoClassKey];
     [query whereKey:kITPhotoUserKey equalTo:[PFUser currentUser]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if([objects count] >0){
