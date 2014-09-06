@@ -41,7 +41,7 @@ NSString *const kITActivityTypeDislikeKey = @"dislike";
 NSString *const kITMenEnabledKey        =   @"men";
 NSString *const kITWomenEnabledKey      =   @"women";
 NSString *const kITSingleEnabledKey     =   @"single";
-NSString *const kITAgeEnabledkey        =   @"ageMax";
+NSString *const kITAgeMaxKey        =   @"ageMax";
 
 
 

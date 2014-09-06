@@ -35,7 +35,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.ageSlider.value = [[NSUserDefaults standardUserDefaults] integerForKey:kITAgeEnabledkey];
+    self.ageSlider.value = [[NSUserDefaults standardUserDefaults] integerForKey:kITAgeMaxKey];
     self.manSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:kITMenEnabledKey];
     self.womenSwitch.on = [[NSUserDefaults standardUserDefaults]boolForKey:kITWomenEnabledKey];
     self.singleSwitch.on = [[NSUserDefaults standardUserDefaults]boolForKey:kITSingleEnabledKey];
@@ -44,6 +44,7 @@
     [self.manSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.womenSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.singleSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+    self.ageLabel.text = [NSString stringWithFormat:@"%i", (int)self.ageSlider.value];
     
 }
 
@@ -70,4 +71,24 @@
 - (IBAction)editProfileButtonPressed:(UIButton *)sender {
 }
 
+#pragma mark helper method
+-(void)valueChanged:(id)sender
+{
+    if(sender == self.ageSlider){
+        [[NSUserDefaults standardUserDefaults]setInteger:(int)self.ageSlider.value forKey:kITAgeMaxKey];
+        self.ageLabel.text = [NSString stringWithFormat:@"%i", (int)self.ageSlider.value];
+        
+    }else if(sender == self.manSwitch){
+        [[NSUserDefaults standardUserDefaults]setBool:self.manSwitch.isOn forKey:kITMenEnabledKey];
+        
+    }else if(sender == self.womenSwitch){
+        [[NSUserDefaults standardUserDefaults]setBool:self.womenSwitch.isOn forKey:kITWomenEnabledKey];
+        
+    }else if(sender == self.singleSwitch){
+        [[NSUserDefaults standardUserDefaults]setBool:self.singleSwitch.isOn forKey:kITSingleEnabledKey];
+        
+    }
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+}
 @end

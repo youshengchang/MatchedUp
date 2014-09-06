@@ -45,7 +45,7 @@ extern NSString *const kITActivityTypeDislikeKey;
 extern NSString *const kITMenEnabledKey;
 extern NSString *const kITWomenEnabledKey;
 extern NSString *const kITSingleEnabledKey;
-extern NSString *const kITAgeEnabledkey;
+extern NSString *const kITAgeMaxKey;
 
 
 @end
