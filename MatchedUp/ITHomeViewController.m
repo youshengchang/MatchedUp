@@ -9,8 +9,11 @@
 #import "ITHomeViewController.h"
 #import "ITTestUser.h"
 #import "ITProfileViewController.h"
+#import "ITMatchViewController.h"
 
-@interface ITHomeViewController ()
+
+@interface ITHomeViewController () <ITMatchViewControllerDelegate>
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *chatBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIImageView *photoImageView;
@@ -56,7 +59,8 @@
     self.currentPhotoIndex = 0;
     
     PFQuery *query = [PFQuery queryWithClassName:kITPhotoClassKey];
-    [query whereKey:kITPhotoUserKey notEqualTo:[PFUser currentUser]];
+    //[query whereKey:kITPhotoUserKey notEqualTo:[PFUser currentUser]];
+    [query whereKey:kITPhotoUserKey equalTo:[PFUser currentUser]];
     [query includeKey:kITPhotoUserKey];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error){
@@ -89,6 +93,11 @@
         
         ITProfileViewController *profileVC = segue.destinationViewController;
         profileVC.photo = self.photo;
+    }
+    else if([segue.identifier isEqualToString:@"homeToMatchSegue"]){
+        ITMatchViewController *matchVC = segue.destinationViewController;
+        matchVC.matchedUserImage = self.photoImageView.image;
+        matchVC.delegate = self;
     }
 }
 
@@ -193,6 +202,7 @@
         self.isLikedByCurrentUser = YES;
         self.isDislikedByCurrentUser = NO;
         [self.activities addObject:likeActivity];
+        [self checkForPhotoUserLikes];
         [self setupNextPhoto];
     }];
 }
@@ -250,5 +260,49 @@
     else{
         [self saveDislike];
     }
+}
+
+-(void)checkForPhotoUserLikes
+{
+    PFQuery *query = [PFQuery queryWithClassName:kITActivityClassKey];
+    [query whereKey:kITActivityFromUserKey equalTo:self.photo[kITPhotoUserKey]];
+    [query whereKey:kITPhotoUserKey equalTo:[PFUser currentUser]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if([objects count] > 0){
+            [self createChatRoom];
+        }
+    }];
+}
+
+-(void)createChatRoom
+{
+    PFQuery *queryForChatRoom = [PFQuery queryWithClassName:@"ChatRoom"];
+    [queryForChatRoom whereKey:@"user1" equalTo:[PFUser currentUser]];
+    [queryForChatRoom whereKey:@"user2" equalTo:self.photo[kITPhotoUserKey]];
+    PFQuery *queryForChatRoomInverse = [PFQuery queryWithClassName:@"ChatRoom"];
+    [queryForChatRoomInverse whereKey:@"user1" equalTo:self.photo[kITPhotoUserKey]];
+    [queryForChatRoomInverse whereKey:@"user2" equalTo:[PFUser currentUser]];
+    
+    PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[queryForChatRoom, queryForChatRoomInverse]];
+    [combinedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if([objects count] ==0){
+            PFObject *chatroom = [PFObject objectWithClassName:@"ChatRoom"];
+            [chatroom setObject:[PFUser currentUser] forKey:@"user1"];
+            [chatroom setObject:self.photo[kITPhotoUserKey] forKey:@"user2"];
+            [chatroom saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                [self performSegueWithIdentifier:@"homeToMatchSegue" sender:nil];
+            }];
+        }
+    }];
+                              
+}
+
+#pragma mark - ITMatchViewController Delegate
+
+-(void)presentMatchesViewController
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        [self performSegueWithIdentifier:@"homeToMatchesSegue" sender:nil];
+    }];
 }
 @end

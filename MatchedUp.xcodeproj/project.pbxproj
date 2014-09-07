@@ -28,6 +28,9 @@
 		8FEC5A6B19BA19AF00E53517 /* ITProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A6A19BA19AF00E53517 /* ITProfileViewController.m */; };
 		8FEC5A6F19BA723500E53517 /* ITTestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A6E19BA723500E53517 /* ITTestUser.m */; };
 		8FEC5A7119BA763300E53517 /* profileImage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8FEC5A7019BA763300E53517 /* profileImage.jpeg */; };
+		8FEC5A7519BC0F6F00E53517 /* ITMatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A7419BC0F6F00E53517 /* ITMatchViewController.m */; };
+		8FEC5A7919BC129300E53517 /* ITMatchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A7819BC129300E53517 /* ITMatchesViewController.m */; };
+		8FEC5A7D19BC176C00E53517 /* ITChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A7C19BC176C00E53517 /* ITChatViewController.m */; };
 		F3EF59CB25A14D9482EEDACB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EF4EB22778402E920F993C /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +78,12 @@
 		8FEC5A6D19BA723500E53517 /* ITTestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITTestUser.h; sourceTree = "<group>"; };
 		8FEC5A6E19BA723500E53517 /* ITTestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITTestUser.m; sourceTree = "<group>"; };
 		8FEC5A7019BA763300E53517 /* profileImage.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = profileImage.jpeg; sourceTree = "<group>"; };
+		8FEC5A7319BC0F6F00E53517 /* ITMatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITMatchViewController.h; sourceTree = "<group>"; };
+		8FEC5A7419BC0F6F00E53517 /* ITMatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITMatchViewController.m; sourceTree = "<group>"; };
+		8FEC5A7719BC129300E53517 /* ITMatchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITMatchesViewController.h; sourceTree = "<group>"; };
+		8FEC5A7819BC129300E53517 /* ITMatchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITMatchesViewController.m; sourceTree = "<group>"; };
+		8FEC5A7B19BC176C00E53517 /* ITChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITChatViewController.h; sourceTree = "<group>"; };
+		8FEC5A7C19BC176C00E53517 /* ITChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITChatViewController.m; sourceTree = "<group>"; };
 		D62ADE1A38C54BF0A41A5926 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,6 +147,9 @@
 		8FEC5A2319B3E21C00E53517 /* MatchedUp */ = {
 			isa = PBXGroup;
 			children = (
+				8FEC5A7A19BC136600E53517 /* Chat */,
+				8FEC5A7619BC126400E53517 /* Matches */,
+				8FEC5A7219BC0F3900E53517 /* Match */,
 				8FEC5A6C19BA71F300E53517 /* CreateParseUser */,
 				8FEC5A6819BA199300E53517 /* Profile */,
 				8FEC5A6419BA15FD00E53517 /* Edit Profile */,
@@ -237,6 +249,33 @@
 				8FEC5A6E19BA723500E53517 /* ITTestUser.m */,
 			);
 			name = CreateParseUser;
+			sourceTree = "<group>";
+		};
+		8FEC5A7219BC0F3900E53517 /* Match */ = {
+			isa = PBXGroup;
+			children = (
+				8FEC5A7319BC0F6F00E53517 /* ITMatchViewController.h */,
+				8FEC5A7419BC0F6F00E53517 /* ITMatchViewController.m */,
+			);
+			name = Match;
+			sourceTree = "<group>";
+		};
+		8FEC5A7619BC126400E53517 /* Matches */ = {
+			isa = PBXGroup;
+			children = (
+				8FEC5A7719BC129300E53517 /* ITMatchesViewController.h */,
+				8FEC5A7819BC129300E53517 /* ITMatchesViewController.m */,
+			);
+			name = Matches;
+			sourceTree = "<group>";
+		};
+		8FEC5A7A19BC136600E53517 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8FEC5A7B19BC176C00E53517 /* ITChatViewController.h */,
+				8FEC5A7C19BC176C00E53517 /* ITChatViewController.m */,
+			);
+			name = Chat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,8 +417,11 @@
 				8FEC5A6F19BA723500E53517 /* ITTestUser.m in Sources */,
 				8FEC5A5B19B5721900E53517 /* ITConstants.m in Sources */,
 				8FEC5A5719B3E2FD00E53517 /* ITLoginViewController.m in Sources */,
+				8FEC5A7919BC129300E53517 /* ITMatchesViewController.m in Sources */,
+				8FEC5A7519BC0F6F00E53517 /* ITMatchViewController.m in Sources */,
 				8FEC5A2A19B3E21C00E53517 /* main.m in Sources */,
 				8FEC5A5F19B6C98300E53517 /* ITHomeViewController.m in Sources */,
+				8FEC5A7D19BC176C00E53517 /* ITChatViewController.m in Sources */,
 				8FEC5A2E19B3E21C00E53517 /* ITAppDelegate.m in Sources */,
 				8FEC5A6719BA163200E53517 /* ITEditProfileViewController.m in Sources */,
 			);

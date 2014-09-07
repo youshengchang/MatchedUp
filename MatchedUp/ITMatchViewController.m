@@ -1,21 +1,22 @@
 //
-//  ITEditProfileViewController.m
+//  ITMatchViewController.m
 //  MatchedUp
 //
-//  Created by yousheng chang on 9/5/14.
+//  Created by yousheng chang on 9/6/14.
 //  Copyright (c) 2014 InfoTech Inc. All rights reserved.
 //
 
-#import "ITEditProfileViewController.h"
+#import "ITMatchViewController.h"
 
-@interface ITEditProfileViewController ()
-@property (strong, nonatomic) IBOutlet UITextView *tagLineTextView;
-@property (strong, nonatomic) IBOutlet UIImageView *profilePictureImageView;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
+@interface ITMatchViewController ()
+@property (strong, nonatomic) IBOutlet UIImageView *matchedUserImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *currentUserImageView;
+@property (strong, nonatomic) IBOutlet UIButton *viewChatsButton;
+@property (strong, nonatomic) IBOutlet UIButton *keepSearchingButton;
 
 @end
 
-@implementation ITEditProfileViewController
+@implementation ITMatchViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,20 +31,19 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     PFQuery *query = [PFQuery queryWithClassName:kITPhotoClassKey];
     [query whereKey:kITPhotoUserKey equalTo:[PFUser currentUser]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if([objects count] > 0){
+        if([objects count] >0){
             PFObject *photo = objects[0];
             PFFile *pictureFile = photo[kITPhotoPictureKey];
             [pictureFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                self.profilePictureImageView.image = [UIImage imageWithData:data];
-                
+                self.currentUserImageView.image = [UIImage imageWithData:data];
+                self.matchedUserImageView.image = self.matchedUserImage;
             }];
         }
     }];
-    self.tagLineTextView.text = [[PFUser currentUser]objectForKey:kITUserTagLineKey];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,13 +63,17 @@
 }
 */
 
+#pragma mark - IBActions
 
-#pragma mark - IB Actions
-- (IBAction)saveBarButtonPressed:(UIBarButtonItem *)sender {
-    [[PFUser currentUser]setObject:self.tagLineTextView.text forKey:kITUserTagLineKey];
-    [[PFUser currentUser]saveInBackground];
-    [self.navigationController popViewControllerAnimated:YES];
+- (IBAction)viewChatsButtonPressed:(UIButton *)sender {
+    
+    [self.delegate presentMatchesViewController];
+    
 }
 
+- (IBAction)keepSearchingButtonPressed:(UIButton *)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end
