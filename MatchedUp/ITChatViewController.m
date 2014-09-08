@@ -7,6 +7,7 @@
 //
 
 #import "ITChatViewController.h"
+#import "JSMessage.h"
 
 @interface ITChatViewController ()
 
@@ -15,6 +16,7 @@
 @property (strong, nonatomic)NSTimer *chatsTimer;
 @property (nonatomic)BOOL initialLoadComplete;
 @property (strong, nonatomic)NSMutableArray *chats;
+
 
 
 @end
@@ -59,6 +61,10 @@
     }
     self.title = self.withUser[@"profile"][@"firstName"];
     self.initialLoadComplete = NO;
+    
+    [self checkForNewChats];
+    self.chatsTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkForNewChats) userInfo:nil repeats:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,6 +72,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [self.chatsTimer invalidate];
+    self.chatsTimer = nil;
+    
+}
+
 
 /*
 #pragma mark - Navigation
@@ -166,11 +180,43 @@
     return YES;
 }
 
-#pragma mark - Messages View data source
-/*
+#pragma mark - Messages View data source required
+
 -(id<JSMessageData>)messageForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    PFObject *chat = self.chats[indexPath.row];
+    JSMessage *message = [[JSMessage alloc]initWithText:chat[@"text"] sender:nil date:[NSDate date]];
+    return message;
     
 }
- */
+
+-(UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath sender:(NSString *)sender
+{
+    return nil;
+}
+
+#pragma mark - Helper Method
+-(void)checkForNewChats
+{
+    int oldChatCount = [self.chats count];
+    
+    PFQuery *queryForChats = [PFQuery queryWithClassName:@"Chat"];
+    [queryForChats whereKey:@"chatroom" equalTo:self.chatRoom];
+    [queryForChats orderByAscending:@"createdAt"];
+    [queryForChats findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            if(self.initialLoadComplete == NO || oldChatCount != [objects count]){
+                self.chats = [objects mutableCopy];
+                [self.tableView reloadData];
+                if(self.initialLoadComplete == YES){
+                    [JSMessageSoundEffect playMessageReceivedSound];
+                }
+                self.initialLoadComplete = YES;
+                [self scrollToBottomAnimated:YES];
+            }
+        }
+    }];
+                
+}
+
 @end

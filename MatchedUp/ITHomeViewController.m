@@ -59,8 +59,8 @@
     self.currentPhotoIndex = 0;
     
     PFQuery *query = [PFQuery queryWithClassName:kITPhotoClassKey];
-    //[query whereKey:kITPhotoUserKey notEqualTo:[PFUser currentUser]];
-    [query whereKey:kITPhotoUserKey equalTo:[PFUser currentUser]];
+    [query whereKey:kITPhotoUserKey notEqualTo:[PFUser currentUser]];
+    //[query whereKey:kITPhotoUserKey equalTo:[PFUser currentUser]];
     [query includeKey:kITPhotoUserKey];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error){
@@ -87,6 +87,8 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    NSLog(@"%@", segue.identifier);
+    
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if([segue.identifier isEqualToString:@"homeToProfileSegue"]){
@@ -95,6 +97,7 @@
         profileVC.photo = self.photo;
     }
     else if([segue.identifier isEqualToString:@"homeToMatchSegue"]){
+        NSLog(@"homeToMatchSegue");
         ITMatchViewController *matchVC = segue.destinationViewController;
         matchVC.matchedUserImage = self.photoImageView.image;
         matchVC.delegate = self;
@@ -110,6 +113,7 @@
 }
 - (IBAction)likeButtonPressed:(UIButton *)sender {
     [self checkLike];
+    [self performSegueWithIdentifier:@"homeToMatchSegue" sender:nil];
 }
 - (IBAction)infoButtonPressed:(UIButton *)sender {
     [self performSegueWithIdentifier:@"homeToProfileSegue" sender:nil];
