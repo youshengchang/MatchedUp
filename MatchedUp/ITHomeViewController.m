@@ -10,6 +10,7 @@
 #import "ITTestUser.h"
 #import "ITProfileViewController.h"
 #import "ITMatchViewController.h"
+#import "ITMatchesViewController.h"
 
 
 @interface ITHomeViewController () <ITMatchViewControllerDelegate>
@@ -102,11 +103,17 @@
         matchVC.matchedUserImage = self.photoImageView.image;
         matchVC.delegate = self;
     }
+    else if([segue.identifier isEqualToString:@"homeToMatchesSegue"]){
+        NSLog(@"homeToMatchesSegue");
+        ITMatchesViewController *matchesVC = segue.destinationViewController;
+       
+    }
 }
 
 
 #pragma mark - IB actions
 - (IBAction)chatBarButtonItemPressed:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"homeToMatchesSegue" sender:nil];
 }
 
 - (IBAction)settingsBarButtonItemPressed:(UIBarButtonItem *)sender {
@@ -270,7 +277,8 @@
 {
     PFQuery *query = [PFQuery queryWithClassName:kITActivityClassKey];
     [query whereKey:kITActivityFromUserKey equalTo:self.photo[kITPhotoUserKey]];
-    [query whereKey:kITPhotoUserKey equalTo:[PFUser currentUser]];
+    [query whereKey:kITActivityToUserKey equalTo:[PFUser currentUser]];
+    [query whereKey:kITActivityTypeKey equalTo:kITActivityTypeLikeKey];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if([objects count] > 0){
             [self createChatRoom];

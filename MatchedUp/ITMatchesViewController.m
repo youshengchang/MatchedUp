@@ -113,7 +113,7 @@
         likedUser = [chatRoom objectForKey:@"user1"];
     }
     cell.textLabel.text = likedUser[@"profile"][@"firstName"];
-    //cell.iamgeView.image = place holder image
+    //cell.imageView.image = place holder
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     PFQuery *queryForPhoto = [[PFQuery alloc]initWithClassName:kITPhotoClassKey];
