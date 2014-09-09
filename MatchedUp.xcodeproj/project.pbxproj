@@ -31,6 +31,7 @@
 		8FEC5A7519BC0F6F00E53517 /* ITMatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A7419BC0F6F00E53517 /* ITMatchViewController.m */; };
 		8FEC5A7919BC129300E53517 /* ITMatchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A7819BC129300E53517 /* ITMatchesViewController.m */; };
 		8FEC5A7D19BC176C00E53517 /* ITChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FEC5A7C19BC176C00E53517 /* ITChatViewController.m */; };
+		8FEC5A7F19BEB9BF00E53517 /* defaultPrefsFile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FEC5A7E19BEB9BF00E53517 /* defaultPrefsFile.plist */; };
 		F3EF59CB25A14D9482EEDACB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EF4EB22778402E920F993C /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,7 @@
 		8FEC5A7819BC129300E53517 /* ITMatchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITMatchesViewController.m; sourceTree = "<group>"; };
 		8FEC5A7B19BC176C00E53517 /* ITChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITChatViewController.h; sourceTree = "<group>"; };
 		8FEC5A7C19BC176C00E53517 /* ITChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITChatViewController.m; sourceTree = "<group>"; };
+		8FEC5A7E19BEB9BF00E53517 /* defaultPrefsFile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaultPrefsFile.plist; sourceTree = "<group>"; };
 		D62ADE1A38C54BF0A41A5926 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -219,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				8FEC5A6119B6CF6A00E53517 /* ITSettingsViewController.h */,
+				8FEC5A7E19BEB9BF00E53517 /* defaultPrefsFile.plist */,
 				8FEC5A6219B6CF6A00E53517 /* ITSettingsViewController.m */,
 			);
 			name = Settings;
@@ -361,6 +364,7 @@
 				8FEC5A7119BA763300E53517 /* profileImage.jpeg in Resources */,
 				8FEC5A2819B3E21C00E53517 /* InfoPlist.strings in Resources */,
 				8FEC5A3119B3E21C00E53517 /* Main.storyboard in Resources */,
+				8FEC5A7F19BEB9BF00E53517 /* defaultPrefsFile.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
