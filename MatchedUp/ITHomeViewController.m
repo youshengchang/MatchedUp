@@ -136,7 +136,7 @@
     }
     else if([segue.identifier isEqualToString:@"homeToMatchesSegue"]){
         NSLog(@"homeToMatchesSegue");
-        ITMatchesViewController *matchesVC = segue.destinationViewController;
+        
        
     }
 }
