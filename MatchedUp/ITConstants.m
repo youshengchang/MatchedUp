@@ -41,8 +41,18 @@ NSString *const kITActivityTypeDislikeKey = @"dislike";
 NSString *const kITMenEnabledKey        =   @"men";
 NSString *const kITWomenEnabledKey      =   @"women";
 NSString *const kITSingleEnabledKey     =   @"single";
-NSString *const kITAgeMaxKey        =   @"ageMax";
+NSString *const kITAgeMaxKey            =   @"ageMax";
 
+#pragma mark - ChatRoom
+NSString *const kITChatRoomClassKey     = @"ChatRoom";
+NSString *const kITChatRoomUser1Key     = @"user1";
+NSString *const kITChatRoomUser2Key     = @"user2";
 
+#pragma mark - Chat
+NSString *const kITChatClassKey         = @"Chat";
+NSString *const kITChatChatroomKey      = @"chatroom";
+NSString *const kITChatFromUserKey      = @"fromUser";
+NSString *const kITChatToUserKey        = @"toUser";
+NSString *const kITChatTextKey          = @"text";
 
 @end

@@ -47,5 +47,18 @@ extern NSString *const kITWomenEnabledKey;
 extern NSString *const kITSingleEnabledKey;
 extern NSString *const kITAgeMaxKey;
 
+#pragma mark - ChatRoom
+extern NSString *const kITChatRoomClassKey;
+extern NSString *const kITChatRoomUser1Key;
+extern NSString *const kITChatRoomUser2Key;
+
+#pragma mark - Chat
+extern NSString *const kITChatClassKey;
+extern NSString *const kITChatChatroomKey;
+extern NSString *const kITChatFromUserKey;
+extern NSString *const kITChatToUserKey;
+extern NSString *const kITChatTextKey;
+
+
 
 @end

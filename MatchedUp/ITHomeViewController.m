@@ -13,17 +13,18 @@
 #import "ITMatchesViewController.h"
 
 
-@interface ITHomeViewController () <ITMatchViewControllerDelegate>
+@interface ITHomeViewController () <ITMatchViewControllerDelegate, ITProfileViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *chatBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (strong, nonatomic) IBOutlet UILabel *firstNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *ageLabel;
-@property (strong, nonatomic) IBOutlet UILabel *tagLineLabel;
 @property (strong, nonatomic) IBOutlet UIButton *likeButton;
 @property (strong, nonatomic) IBOutlet UIButton *infoButton;
 @property (strong, nonatomic) IBOutlet UIButton *dislikeButton;
+@property (strong, nonatomic) IBOutlet UIView *labelContainerView;
+@property (strong, nonatomic) IBOutlet UIView *buttonContainerView;
 
 @property (strong, nonatomic) NSArray *photos;
 @property (strong, nonatomic) PFObject *photo;
@@ -52,6 +53,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //[ITTestUser saveTestUserToParse];
+    [self setUpViews];
     
 }
 
@@ -87,6 +89,22 @@
     
 }
 
+-(void)setUpViews
+{
+    self.view.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
+    [self addShadowForView:self.buttonContainerView];
+    [self addShadowForView:self.labelContainerView];
+    self.photoImageView.layer.masksToBounds = YES;
+}
+
+-(void)addShadowForView:(UIView *)view
+{
+    view.layer.masksToBounds = NO;
+    view.layer.cornerRadius = 4;
+    view.layer.shadowRadius = 1;
+    view.layer.shadowOffset = CGSizeMake(0, 1);
+    view.layer.shadowOpacity = 0.25;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -108,6 +126,7 @@
         
         ITProfileViewController *profileVC = segue.destinationViewController;
         profileVC.photo = self.photo;
+        profileVC.delegate = self;
     }
     else if([segue.identifier isEqualToString:@"homeToMatchSegue"]){
         NSLog(@"homeToMatchSegue");
@@ -200,7 +219,6 @@
 {
     self.firstNameLabel.text = self.photo[kITPhotoUserKey][kITUserProfileKey][kITUserProfileFirstNameKey];
     self.ageLabel.text = [NSString stringWithFormat:@"%@", self.photo[kITPhotoUserKey][kITUserProfileKey][kITUserProfileAgeKey]];
-    self.tagLineLabel.text = self.photo[kITPhotoUserKey][kITUserTagLineKey];
 }
 
 -(void)setupNextPhoto
@@ -226,16 +244,21 @@
     BOOL women = [[NSUserDefaults standardUserDefaults]boolForKey:kITWomenEnabledKey];
     BOOL single = [[NSUserDefaults standardUserDefaults]boolForKey:kITSingleEnabledKey];
     
+    NSLog(@"in allowPhto(): women = %d", women);
+    
     PFObject *photo = self.photos[self.currentPhotoIndex];
     PFUser *user = photo[kITPhotoUserKey];
     int userAge = [user[kITUserProfileKey][kITUserProfileAgeKey] intValue];
     NSString *gender = user[kITUserProfileKey][kITUserProfileGenderkey];
     NSString *relationshipStatus = user[kITUserProfileKey][kITUserProfileRelationshipStatusKey];
+    
+    NSLog(@"in allowPhoto(): gender = %@", gender);
+    
     if(userAge > maxAge){
         return NO;
     }else if(men == NO && [gender isEqualToString:@"male"]){
         return NO;
-    }else if(women == NO && [gender isEqualToString:@"femail"]){
+    }else if(women == NO && [gender isEqualToString:@"female"]){
         return NO;
     }
     else if(single == NO && ([relationshipStatus isEqualToString:@"single"] || relationshipStatus == nil)){
@@ -331,19 +354,22 @@
 
 -(void)createChatRoom
 {
-    PFQuery *queryForChatRoom = [PFQuery queryWithClassName:@"ChatRoom"];
-    [queryForChatRoom whereKey:@"user1" equalTo:[PFUser currentUser]];
-    [queryForChatRoom whereKey:@"user2" equalTo:self.photo[kITPhotoUserKey]];
-    PFQuery *queryForChatRoomInverse = [PFQuery queryWithClassName:@"ChatRoom"];
-    [queryForChatRoomInverse whereKey:@"user1" equalTo:self.photo[kITPhotoUserKey]];
-    [queryForChatRoomInverse whereKey:@"user2" equalTo:[PFUser currentUser]];
+    PFQuery *queryForChatRoom = [PFQuery queryWithClassName:kITChatRoomClassKey];
+    [queryForChatRoom whereKey:kITChatRoomUser1Key equalTo:[PFUser currentUser]];
+    [queryForChatRoom whereKey:kITChatRoomUser2Key equalTo:self.photo[kITPhotoUserKey]];
+    PFQuery *queryForChatRoomInverse = [PFQuery queryWithClassName:kITChatRoomClassKey];
+    [queryForChatRoomInverse whereKey:kITChatRoomUser1Key equalTo:self.photo[kITPhotoUserKey]];
+    [queryForChatRoomInverse whereKey:kITChatRoomUser2Key equalTo:[PFUser currentUser]];
     
     PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[queryForChatRoom, queryForChatRoomInverse]];
     [combinedQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if([objects count] ==0){
-            PFObject *chatroom = [PFObject objectWithClassName:@"ChatRoom"];
-            [chatroom setObject:[PFUser currentUser] forKey:@"user1"];
-            [chatroom setObject:self.photo[kITPhotoUserKey] forKey:@"user2"];
+        if(error){
+            NSLog(@"%@", error);
+        }
+        else if([objects count] ==0){
+            PFObject *chatroom = [PFObject objectWithClassName:kITChatRoomClassKey];
+            [chatroom setObject:[PFUser currentUser] forKey:kITChatRoomUser1Key];
+            [chatroom setObject:self.photo[kITPhotoUserKey] forKey:kITChatRoomUser2Key];
             [chatroom saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [self performSegueWithIdentifier:@"homeToMatchSegue" sender:nil];
             }];
@@ -359,5 +385,18 @@
     [self dismissViewControllerAnimated:NO completion:^{
         [self performSegueWithIdentifier:@"homeToMatchesSegue" sender:nil];
     }];
+}
+
+#pragma mark - ITProfileViewController Delegate
+-(void)didPressDislike
+{
+    [self.navigationController popViewControllerAnimated:NO];
+    [self checkDislike];
+}
+
+-(void)didPressLike
+{
+    [self.navigationController popViewControllerAnimated:NO];
+    [self checkLike];
 }
 @end
