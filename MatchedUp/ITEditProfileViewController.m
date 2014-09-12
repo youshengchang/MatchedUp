@@ -8,7 +8,8 @@
 
 #import "ITEditProfileViewController.h"
 
-@interface ITEditProfileViewController ()
+@interface ITEditProfileViewController () <UITextViewDelegate>
+
 @property (strong, nonatomic) IBOutlet UITextView *tagLineTextView;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePictureImageView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
@@ -30,6 +31,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.tagLineTextView.delegate = self;
+    self.view.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
+    
     PFQuery *query = [PFQuery queryWithClassName:kITPhotoClassKey];
     [query whereKey:kITPhotoUserKey equalTo:[PFUser currentUser]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -64,12 +69,21 @@
 */
 
 
-#pragma mark - IB Actions
-- (IBAction)saveBarButtonPressed:(UIBarButtonItem *)sender {
-    [[PFUser currentUser]setObject:self.tagLineTextView.text forKey:kITUserTagLineKey];
-    [[PFUser currentUser]saveInBackground];
-    [self.navigationController popViewControllerAnimated:YES];
-}
+#pragma mark - TextView Delegate
 
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if([text isEqualToString:@"\n"]){
+        [self.tagLineTextView resignFirstResponder];
+        [[PFUser currentUser]setObject:self.tagLineTextView.text forKey:kITUserTagLineKey];
+        [[PFUser currentUser]saveInBackground];
+        [self.navigationController popViewControllerAnimated:YES];
+        return NO;
+    }else{
+        return YES;
+        
+    }
+}
 
 @end

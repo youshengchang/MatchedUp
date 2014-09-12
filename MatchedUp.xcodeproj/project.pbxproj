@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F1C434619C369E500EA211A /* ITTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F1C434519C369E500EA211A /* ITTransitionAnimator.m */; };
 		8FEC5A1E19B3E21C00E53517 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FEC5A1D19B3E21C00E53517 /* Foundation.framework */; };
 		8FEC5A2019B3E21C00E53517 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FEC5A1F19B3E21C00E53517 /* CoreGraphics.framework */; };
 		8FEC5A2219B3E21C00E53517 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FEC5A2119B3E21C00E53517 /* UIKit.framework */; };
@@ -195,6 +196,8 @@
 
 /* Begin PBXFileReference section */
 		45EF4EB22778402E920F993C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F1C434419C369E500EA211A /* ITTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITTransitionAnimator.h; sourceTree = "<group>"; };
+		8F1C434519C369E500EA211A /* ITTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITTransitionAnimator.m; sourceTree = "<group>"; };
 		8FEC5A1A19B3E21C00E53517 /* MatchedUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchedUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FEC5A1D19B3E21C00E53517 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8FEC5A1F19B3E21C00E53517 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -410,6 +413,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F1C434319C3699D00EA211A /* Transition Helper */ = {
+			isa = PBXGroup;
+			children = (
+				8F1C434419C369E500EA211A /* ITTransitionAnimator.h */,
+				8F1C434519C369E500EA211A /* ITTransitionAnimator.m */,
+			);
+			name = "Transition Helper";
+			sourceTree = "<group>";
+		};
 		8FEC5A1119B3E21C00E53517 = {
 			isa = PBXGroup;
 			children = (
@@ -554,6 +566,7 @@
 		8FEC5A7219BC0F3900E53517 /* Match */ = {
 			isa = PBXGroup;
 			children = (
+				8F1C434319C3699D00EA211A /* Transition Helper */,
 				8FEC5A7319BC0F6F00E53517 /* ITMatchViewController.h */,
 				8FEC5A7419BC0F6F00E53517 /* ITMatchViewController.m */,
 			);
@@ -1146,6 +1159,7 @@
 				8FEC5A2A19B3E21C00E53517 /* main.m in Sources */,
 				8FEC5A5F19B6C98300E53517 /* ITHomeViewController.m in Sources */,
 				8FEC5A7D19BC176C00E53517 /* ITChatViewController.m in Sources */,
+				8F1C434619C369E500EA211A /* ITTransitionAnimator.m in Sources */,
 				8FEC5A2E19B3E21C00E53517 /* ITAppDelegate.m in Sources */,
 				8FEC5A6719BA163200E53517 /* ITEditProfileViewController.m in Sources */,
 			);

@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    NSLog(@"matchedUserImage = %@", self.matchedUserImage);
     PFQuery *query = [PFQuery queryWithClassName:kITPhotoClassKey];
     [query whereKey:kITPhotoUserKey equalTo:[PFUser currentUser]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

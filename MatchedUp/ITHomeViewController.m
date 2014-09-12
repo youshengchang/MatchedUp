@@ -11,9 +11,10 @@
 #import "ITProfileViewController.h"
 #import "ITMatchViewController.h"
 #import "ITMatchesViewController.h"
+#import "ITTransitionAnimator.h"
 
 
-@interface ITHomeViewController () <ITMatchViewControllerDelegate, ITProfileViewControllerDelegate>
+@interface ITHomeViewController () <ITMatchViewControllerDelegate, ITProfileViewControllerDelegate, UIViewControllerTransitioningDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *chatBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
@@ -128,12 +129,12 @@
         profileVC.photo = self.photo;
         profileVC.delegate = self;
     }
-    else if([segue.identifier isEqualToString:@"homeToMatchSegue"]){
+    /*else if([segue.identifier isEqualToString:@"homeToMatchSegue"]){
         NSLog(@"homeToMatchSegue");
         ITMatchViewController *matchVC = segue.destinationViewController;
         matchVC.matchedUserImage = self.photoImageView.image;
         matchVC.delegate = self;
-    }
+    }*/
     else if([segue.identifier isEqualToString:@"homeToMatchesSegue"]){
         NSLog(@"homeToMatchesSegue");
         
@@ -151,7 +152,16 @@
 }
 - (IBAction)likeButtonPressed:(UIButton *)sender {
     [self checkLike];
-    [self performSegueWithIdentifier:@"homeToMatchSegue" sender:nil];
+    //[self performSegueWithIdentifier:@"homeToMatchSegue" sender:nil];
+    UIStoryboard *myStoryBoard = self.storyboard;
+    ITMatchViewController *matchViewController = [myStoryBoard instantiateViewControllerWithIdentifier:@"matchVC"];
+    matchViewController.view.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:.75];
+    matchViewController.transitioningDelegate = self;
+    matchViewController.matchedUserImage = self.photoImageView.image;
+    matchViewController.delegate = self;
+    matchViewController.modalPresentationStyle = UIModalPresentationCustom;
+    [self presentViewController:matchViewController animated:YES completion:nil];
+
 }
 - (IBAction)infoButtonPressed:(UIButton *)sender {
     [self performSegueWithIdentifier:@"homeToProfileSegue" sender:nil];
@@ -371,7 +381,18 @@
             [chatroom setObject:[PFUser currentUser] forKey:kITChatRoomUser1Key];
             [chatroom setObject:self.photo[kITPhotoUserKey] forKey:kITChatRoomUser2Key];
             [chatroom saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                [self performSegueWithIdentifier:@"homeToMatchSegue" sender:nil];
+               // [self performSegueWithIdentifier:@"homeToMatchSegue" sender:nil];
+                /*
+                UIStoryboard *myStoryBoard = self.storyboard;
+                ITMatchViewController *matchViewController = [myStoryBoard instantiateViewControllerWithIdentifier:@"matchVC"];
+                matchViewController.view.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:.75];
+                matchViewController.transitioningDelegate = self;
+                matchViewController.matchedUserImage = self.photoImageView.image;
+                matchViewController.delegate = self;
+                matchViewController.modalPresentationStyle = UIModalPresentationCustom;
+                [self presentViewController:matchViewController animated:YES completion:nil];
+                 */
+                
             }];
         }
     }];
@@ -398,5 +419,22 @@
 {
     [self.navigationController popViewControllerAnimated:NO];
     [self checkLike];
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+-(id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+    ITTransitionAnimator *animator = [[ITTransitionAnimator alloc]init];
+    animator.presenting = YES;
+    return animator;
+    
+}
+
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    ITTransitionAnimator *animator = [[ITTransitionAnimator alloc]init];
+    return animator;
+    
 }
 @end
